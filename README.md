@@ -4,15 +4,41 @@ An end-to-end NLP pipeline that transforms lecture videos into concise summaries
 
 ## Pipeline Overview
 
+**Stage 1 — Input & Extraction**
 ```
-Video (YouTube / Kaggle)
-    → Audio Extraction (FFmpeg)
-    → Transcription (Whisper base)
-    → Cleaning & Sentence Segmentation
-    → Semantic Deduplication (SentenceTransformer + cosine similarity)
-    → Extractive + Abstractive Summarisation (BART)
-    → Quiz Generation (T5)
-    → Evaluation (ROUGE scores)
+Lecture Video (YouTube / Kaggle)  →  Video Download  →  Audio Extraction (FFmpeg)
+```
+
+**Stage 2 — Transcription & Text Processing**
+```
+Audio  →  Speech-to-Text (Whisper)  →  Raw Transcript
+       →  Text Cleaning  →  Sentence Segmentation  →  Redundancy Removal
+```
+
+**Stage 3 — Summarisation**
+```
+Filtered Sentences
+    →  Chunking with Overlap (20-sentence windows)
+    →  Chunk-wise Summarisation (BART)
+    →  Combine Chunk Summaries
+    →  Final Global Summarisation (BART)
+    →  Post-processing
+    →  Final Summary Output
+```
+
+**Stage 4 — Question Generation**
+```
+Summary Input
+    →  Answer Extraction (POS tagging, noun phrases)
+    →  Question Generation (T5)
+    →  Distractor Generation (noun phrases from other summary sentences)
+    →  Duplicate Question Removal (embedding similarity)
+    →  Final MCQ Output
+```
+
+**Evaluation** *(runs in parallel with summarisation)*
+```
+Summary + Original Transcript  →  ROUGE Score Calculation  →  Performance Metrics Output
 ```
 
 ## Pretrained Models Used
