@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.env
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Project output directories
+youtube_videos/
+audio_files/
+transcripts/
+segmented/
+deduplicated/
+summaries/
+quiz_output/
+
+# Large model caches
+*.bin
+*.pt
+*.ckpt
+
+# Kaggle credentials
+kaggle.json
+
+# Reference doc (not part of the codebase)
+"NLP proj 2.docx"
+nlpygb.ipynb
